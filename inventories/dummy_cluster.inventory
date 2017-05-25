@@ -1,0 +1,10 @@
+[example]
+web-2.example.net hostname=web-2.example.net 
+web-1.example.net hostname=web-1.example.net 
+web-0.example.net hostname=web-0.example.net 
+
+[all]
+web-2.example.net hostname=web-2.example.net 
+web-1.example.net hostname=web-1.example.net 
+web-0.example.net hostname=web-0.example.net 
+

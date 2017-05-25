@@ -1,0 +1,45 @@
+#The following example illustrates the PinFile
+#
+#SYNTAX:
+#
+#target:
+#    topology: <string>
+#    inventory: <string>
+
+#duffy_3node_target:
+#  topology: duffy_3node.yml
+#  layout: 3node_layout.yml
+
+duffy:
+  topology: duffy_1node.yml
+  layout: 1node_layout.yml
+  hooks:
+    postup:
+      - name: post_up
+        type: ansible
+        actions:
+          - playbook: install_preqs.yaml
+      - name: libvirt-setup
+        type: ansible
+        actions:
+          - playbook: setup-system.yml 
+          - playbook: setup-libvirt-image.yml
+            extra_vars: # extravars needed , name , memory, disk , count, admin_passwd
+              state: "present"
+              inventory_dir: "/tmp/"
+              name: "hellyvm"
+              admin_passwd: "adminpass"
+              count: 3
+              
+dummy:
+  topology: dummy-cluster.yml
+  layout: dummy-layout.yml
+  hooks:
+    preup:             
+        - name: post_up
+          type: ansible
+          context: false
+          actions:
+            - playbook: test_playbook.yaml
+              vars: test_var.yaml
+              extra_vars: { "test_var": "preup task"} 
