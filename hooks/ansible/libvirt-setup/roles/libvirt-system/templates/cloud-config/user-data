@@ -14,6 +14,14 @@ users:
     passwd: {{ admin_passwd }}
     ssh-authorized-keys:
       - {{ admin_ssh_rsa }}
+  - name: barfoo
+    gecos: Bar B. Foo
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: wheel
+    ssh-import-id: None
+    lock_passwd: true
+    ssh-authorized-keys:
+      - {{ admin_ssh_rsa }}
 
 timezone: UTC
 
