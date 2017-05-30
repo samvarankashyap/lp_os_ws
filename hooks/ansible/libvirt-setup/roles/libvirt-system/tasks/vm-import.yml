@@ -51,6 +51,9 @@
   file: path="/tmp/{{ base_image }}" state=absent
   when: vm_exists == false
 
+- name: "Add more storage to base image"
+  command: qemu-img resize "{{ qemu_img_path }}/{{ vm_name }}.img" +10G
+
 - name: Prepare cloud-config/user-data
   template: src="templates/cloud-config/user-data" dest="/tmp/vm-{{ vm_name }}/user-data"
 
