@@ -102,6 +102,7 @@
 - name: Install VM
   command: virt-install --import --name {{ vm_name }} --autostart --network bridge={{ bridge }},model=virtio --ram {{ memory }} {{ disk }} {{ disk_cdrom }} --os-type=linux --nographics
   when: vm_exists == false
+  ignore_errors: yes
 
 - name: Remove cloud-init cdrom
   command: virsh change-media {{ vm_name }} hda --eject --config
@@ -139,8 +140,14 @@
  # delegate_to: 127.0.0.1
   when: vm_exists == false
 
-- wait_for: host={{ ip_address.stdout }} port=22 state=started timeout=1200
+- name: "Dump the dict"
+  copy:
+    content: "{{ ips }}"
+    dest: "/tmp/inventory.json"
+  ignore_errors: yes
+
+- wait_for: host={{ ip_address.stdout }} port=22 state=started timeout=60
   tags:
   - post_install
   when: vm_exists == false
-
+  ignore_errors: yes
