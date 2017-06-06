@@ -45,7 +45,8 @@
             - libvirt-daemon
             - libvirt-daemon-kvm
             - net-tools
+            - python34
 
       - service: name={{ item }} state=started
         with_items:
-            - libvirtd
+            - libvirt
