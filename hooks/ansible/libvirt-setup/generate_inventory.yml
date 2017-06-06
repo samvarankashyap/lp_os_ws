@@ -18,4 +18,8 @@
     - name: "render fixed template openshift template for 3 node cluster"
       template:
         src: openshift_3node_template.j2
-        dest: /tmp/openshift_3node.yml
+        dest: /tmp/openshift_3node.inv
+    - name: "render 1 node inventory"
+      template:
+        src: general_1node_template.j2
+        dest: /tmp/general_1node.inv

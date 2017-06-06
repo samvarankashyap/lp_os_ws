@@ -17,11 +17,21 @@
      base_image: "{{ img_url | basename | regex_replace('\\.(gz|xz)$', '') }}"
   when: vm_exists == false
 
-- name: "Get {{ img_url }}"
-  get_url:
-    url: "{{ img_url }}"
+#- name: "Get {{ img_url }}"
+#  get_url:
+#    url: "{{ img_url }}"
+#    dest: "/tmp/{{ img_url | basename }}"
+#  ignore_errors: yes
+#  register: task_result
+#  until: task_result.changed == true
+#  retries: 3
+#  when: vm_exists == false
+
+- name: "Copy the image to tmp"
+  copy:
+    src: "/var/lib/libvirt/images/{{ img_url | basename }}"
     dest: "/tmp/{{ img_url | basename }}"
-  when: vm_exists == false
+    remote_src: true
 
 - stat: path="/tmp/{{ base_image }}.gz"
   register: base_image_gz

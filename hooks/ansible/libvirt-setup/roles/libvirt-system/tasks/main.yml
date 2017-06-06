@@ -1,12 +1,13 @@
 ---
 - name: "Delete prefetched image "
   file:
-    path: "/var/lib/libvirt/images/{{ 'https://download.fedoraproject.org/pub/fedora/linux/releases/25/CloudImages/x86_64/images/Fedora-Cloud-Base-25-1.3.x86_64.qcow2' | basename }}"
+    path: "/var/lib/libvirt/images/{{ img_url | basename }}"
     state: "absent"
+  ignore_errors: yes
 
 - name: "Get the image"
   get_url:
-    url: "https://download.fedoraproject.org/pub/fedora/linux/releases/25/CloudImages/x86_64/images/Fedora-Cloud-Base-25-1.3.x86_64.qcow2"
+    url: "{{ img_url | default('https://download.fedoraproject.org/pub/fedora/linux/releases/25/CloudImages/x86_64/images/Fedora-Cloud-Base-25-1.3.x86_64.qcow2') }}"
     dest: /var/lib/libvirt/images/ 
     mode: 0777
   register: task_result
