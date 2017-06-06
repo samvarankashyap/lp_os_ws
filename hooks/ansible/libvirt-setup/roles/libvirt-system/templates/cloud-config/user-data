@@ -10,8 +10,9 @@ users:
   - name: admin
     gecos: Admin User
     groups: wheel
-    lock-passwd: false
-    passwd: {{ admin_passwd }}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh-import-id: None
+    lock_passwd: true
     ssh-authorized-keys:
       - {{ admin_ssh_rsa }}
   - name: barfoo
